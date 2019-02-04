@@ -66,7 +66,7 @@ namespace WebStats.E2E
             var maxSize = ChromeDriver.FindElementById("maxResponseSize").GetAttribute("innerHTML");
 
       
-            Assert.AreEqual("10,000,000.00", maxSize);
+            Assert.AreEqual("10,000,000", maxSize);
         }
 
 
