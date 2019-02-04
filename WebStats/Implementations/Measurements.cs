@@ -104,6 +104,15 @@ namespace WebStats.Implementations
             responseSizeList.Add(responseSize);
         }
 
+        public void TrimResponseSizeList()
+        {
+            var responseSizeList = GetResponseSizesList();
+            while (responseSizeList.Count > 5000)
+            {
+                responseSizeList.RemoveAt(responseSizeList.Count - 1);
+            }
+        }
+
         private List<long> GetResponseSizesList()
         {
             if (!StateStore.ContainsKey("ResponseSizes") ||

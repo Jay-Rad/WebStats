@@ -16,5 +16,6 @@ namespace WebStats.Interfaces
         void LogModuleStart(string requestID, Stopwatch counter);
         void LogRequestStart(string requestID, Stopwatch counter);
         void LogResponseSize(long responseSize);
+        void TrimResponseSizeList();
     }
 }

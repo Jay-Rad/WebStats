@@ -26,5 +26,5 @@ I created this as part of a coding challenge for an open position at a really aw
 * WebStats.E2E contains end-to-end tests.
     * Launches the sample site in IIS Express.
     * Uses Selenium to browse the site and ensure the widget is working properly.
-* If the tests aren't running, try rebuilding, closing Visual Studio, then reopening the solution.
+* If the tests aren't running, try rebuilding the solution a few times.
 * If there are exceptions, try running "Update-Package -Reinstall" in the NuGet Package Manager console.

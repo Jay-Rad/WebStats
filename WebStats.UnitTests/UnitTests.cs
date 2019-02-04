@@ -71,6 +71,17 @@ namespace WebStats.UnitTests
             Assert.AreEqual(Measurements.GetMinResponseSize(), 500);
             Assert.AreEqual(Measurements.GetAverageResponseSize(), 750);
             Assert.AreEqual(Measurements.GetMaxResponseSize(), 1000);
+
+
+            // Verify trimming of response size list works.
+            for (var i = 0; i < 6000; i++)
+            {
+                Measurements.LogResponseSize(i);
+            }
+
+            Assert.IsTrue((StateStore["ResponseSizes"] as List<long>).Count > 5000);
+            Measurements.TrimResponseSizeList();
+            Assert.IsTrue((StateStore["ResponseSizes"] as List<long>).Count == 5000);
         }
 
         [TestMethod]

@@ -66,6 +66,8 @@ namespace WebStats.Implementations
             Context.Request.Headers.Remove("WebStatsRequestID");
             StateStore.Remove($"ModuleStart{requestID}");
             StateStore.Remove($"RequestStart{requestID}");
+
+            Measurements.TrimResponseSizeList();
         }
     }
 }
