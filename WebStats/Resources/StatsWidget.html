@@ -1,0 +1,56 @@
+﻿<div class='widget-wrapper'>
+    <h4>WebStats</h4>
+    <div class="stats-frame">
+        <h6><strong>Processing Times</strong></h6>
+        <ul>
+            <li>
+                Request: <span id="requestTime">{requestTime}</span> ms
+            </li>
+            <li>
+                Module: <span id="moduleTime">{moduleTime}</span> ms
+            </li>
+        </ul>
+        <h6><strong>Response Sizes</strong></h6>
+        <ul>
+            <li>
+                Smallest: <span id="minResponseSize">{minResponseSize}</span> bytes
+            </li>
+            <li>
+                Average: <span id="averageresponseSize">{averageResponseSize}</span> bytes
+            </li>
+            <li>
+                Largest: <span id="maxResponseSize">{maxResponseSize}</span> bytes
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .widget-wrapper {
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        background: whitesmoke;
+        border: 1px solid steelblue;
+        padding: 10px;
+        border-radius: 5px;
+        transition: all .5s ease;
+    }
+
+    .stats-frame {
+        opacity: 0;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        transition: all .5s ease;
+    }
+
+    .widget-wrapper:hover .stats-frame {
+        opacity: 1;
+        height: 190px;
+        width: 225px;
+        overflow-y: auto;
+        transition: all .5s ease;
+    }
+
+</style>
