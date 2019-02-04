@@ -33,6 +33,16 @@ namespace WebStats.Implementations
             return responseSizeList.Average();
         }
 
+        public double GetCurrentResponseSize()
+        {
+            var responseSizeList = GetResponseSizesList();
+            if (responseSizeList.Count == 0)
+            {
+                return 0;
+            }
+            return responseSizeList.Last();
+        }
+
         public long GetMaxResponseSize()
         {
             var responseSizeList = GetResponseSizesList();

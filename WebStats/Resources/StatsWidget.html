@@ -13,6 +13,9 @@
         <h6><strong>Response Sizes</strong></h6>
         <ul>
             <li>
+                Current: <span id="currentResponseSize">{currentResponseSize}</span> bytes
+            </li>
+            <li>
                 Smallest: <span id="minResponseSize">{minResponseSize}</span> bytes
             </li>
             <li>
@@ -47,7 +50,7 @@
 
     .widget-wrapper:hover .stats-frame {
         opacity: 1;
-        height: 190px;
+        height: 200px;
         width: 225px;
         overflow-y: auto;
         transition: all .5s ease;

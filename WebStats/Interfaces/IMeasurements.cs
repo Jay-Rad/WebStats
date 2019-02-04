@@ -8,6 +8,7 @@ namespace WebStats.Interfaces
     public interface IMeasurements
     {
         double GetAverageResponseSize();
+        double GetCurrentResponseSize();
         long GetMaxResponseSize();
         long GetMinResponseSize();
         string GetModuleProcessingTime(string requestID);

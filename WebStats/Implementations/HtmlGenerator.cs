@@ -44,13 +44,16 @@ namespace WebStats.Implementations
                 }
             }
 
+            var current = Measurements.GetCurrentResponseSize();
             var min = Measurements.GetMinResponseSize();
             var avg = Measurements.GetAverageResponseSize();
             var max = Measurements.GetMaxResponseSize();
             var moduleTime = Measurements.GetModuleProcessingTime(requestID);
             var requestTime = Measurements.GetRequestProcessingTime(requestID);
 
-            return WidgetContent.Replace("{minResponseSize}", string.Format("{0:n0}", min))
+            return WidgetContent
+                .Replace("{currentResponseSize}", string.Format("{0:n0}", current))
+                .Replace("{minResponseSize}", string.Format("{0:n0}", min))
                 .Replace("{averageResponseSize}", string.Format("{0:n}", avg))
                 .Replace("{maxResponseSize}", string.Format("{0:n0}", max))
                 .Replace("{moduleTime}", moduleTime)

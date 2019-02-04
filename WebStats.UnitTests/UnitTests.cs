@@ -60,12 +60,14 @@ namespace WebStats.UnitTests
 
 
             Measurements.LogResponseSize(500);
+            Assert.AreEqual(Measurements.GetCurrentResponseSize(), 500);
             Assert.AreEqual(Measurements.GetMinResponseSize(), 500);
             Assert.AreEqual(Measurements.GetAverageResponseSize(), 500);
             Assert.AreEqual(Measurements.GetMaxResponseSize(), 500);
 
 
             Measurements.LogResponseSize(1000);
+            Assert.AreEqual(Measurements.GetCurrentResponseSize(), 1000);
             Assert.AreEqual(Measurements.GetMinResponseSize(), 500);
             Assert.AreEqual(Measurements.GetAverageResponseSize(), 750);
             Assert.AreEqual(Measurements.GetMaxResponseSize(), 1000);
@@ -80,6 +82,7 @@ namespace WebStats.UnitTests
 
             Assert.IsTrue(widgetHTML.Contains("<span id=\"requestTime\">Not Found</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"moduleTime\">Not Found</span>"));
+            Assert.IsTrue(widgetHTML.Contains("<span id=\"currentResponseSize\">0</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"minResponseSize\">0</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"averageresponseSize\">0.00</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"maxResponseSize\">0</span>"));

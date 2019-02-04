@@ -24,24 +24,7 @@ namespace WebStats
             // Avoid race conditions.
             lock (StateStore)
             {
-                BuildDependencies(sender as HttpApplication);
                 RequestProcessor.ProcessRequestStart();
-            }
-        }
-
-        private void BuildDependencies(HttpApplication context)
-        {
-            if (Measurements == null)
-            {
-                Measurements = new Measurements(StateStore);
-            }
-            if (HtmlGenerator == null)
-            {
-                HtmlGenerator = new HtmlGenerator(Measurements);
-            }
-            if (RequestProcessor == null)
-            {
-                RequestProcessor = new RequestProcessor(context, StateStore, Measurements, HtmlGenerator);
             }
         }
 
@@ -63,8 +46,16 @@ namespace WebStats
 
         public void Init(HttpApplication context)
         {
+            BuildDependencies(context);
             context.BeginRequest += Context_BeginRequest;
             context.EndRequest += Context_EndRequest;
+        }
+
+        private void BuildDependencies(HttpApplication context)
+        {
+            Measurements = new Measurements(StateStore);
+            HtmlGenerator = new HtmlGenerator(Measurements);
+            RequestProcessor = new RequestProcessor(context, StateStore, Measurements, HtmlGenerator);
         }
     }
 }
