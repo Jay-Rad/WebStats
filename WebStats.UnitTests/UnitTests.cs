@@ -54,6 +54,7 @@ namespace WebStats.UnitTests
         public void MeasureSizesTests()
         {
             // Should all be 0 before any sizes are logged.
+            Assert.AreEqual(Measurements.GetCurrentResponseSize(), 0);
             Assert.AreEqual(Measurements.GetMinResponseSize(), 0);
             Assert.AreEqual(Measurements.GetAverageResponseSize(), 0);
             Assert.AreEqual(Measurements.GetMaxResponseSize(), 0);
