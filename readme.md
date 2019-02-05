@@ -6,15 +6,19 @@ An HttpModule that gathers statistics about request processing times and respons
 
 ![WebStats Widget](https://github.com/Jay-Rad/WebStats/raw/master/Solution%20Items/Widget.gif "WebStats Widget")
 
-## Why I Built This
-I created this as part of a coding challenge for an open position at a really awesome company.
-
 ## Getting Started
 * The entry point of the module is \WebStats\StatsModule.cs.
 * Run WebStats.SampleSite for a working demo.
 * Run Install-WebStats.ps1 (in Solution Items folder) from an elevated PowerShell console to install WebStats module on all local IIS sites.
     * Note: The module DLL is embedded as a Base64 string in the script and is updated every build.  You can distribute the script by itself for installation on other machines.
 * To install on a single site, put the WebStats.dll file in the site's Bin directory, then modify the web.config's modules section to include type "WebStats.StatsModule".
+````
+    <system.webServer>
+        <modules>
+            <add name="WebStats" type="WebStats.StatsModule" />
+        </modules>
+    </system.webServer>
+````
 * You can customize the widget by modifying \WebStats\Resources\StatsWidget.html.
 
 ## Prerequisites
