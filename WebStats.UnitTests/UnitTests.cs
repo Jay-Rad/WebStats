@@ -29,11 +29,8 @@ namespace WebStats.UnitTests
             Assert.AreEqual(Measurements.GetModuleProcessingTime("test"), "Not Found");
             Assert.AreEqual(Measurements.GetRequestProcessingTime("test"), "Not Found");
 
-            var requestCounter = Stopwatch.StartNew();
-            var moduleCounter = Stopwatch.StartNew();
-
-            Measurements.LogRequestStart("test", requestCounter);
-            Measurements.LogModuleStart("test", moduleCounter);
+            var requestCounter = Measurements.LogRequestStart("test");
+            var moduleCounter = Measurements.LogModuleStart("test");
 
             // Add some random wait time.
             System.Threading.Thread.Sleep((int)(new Random().NextDouble() * 500));

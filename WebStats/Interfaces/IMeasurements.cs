@@ -13,8 +13,8 @@ namespace WebStats.Interfaces
         long GetMinResponseSize();
         string GetModuleProcessingTime(string requestID);
         string GetRequestProcessingTime(string requestID);
-        void LogModuleStart(string requestID, Stopwatch counter);
-        void LogRequestStart(string requestID, Stopwatch counter);
+        Stopwatch LogModuleStart(string requestID);
+        Stopwatch LogRequestStart(string requestID);
         void LogResponseSize(long responseSize);
         void TrimResponseSizeList();
     }

@@ -10,6 +10,10 @@ using WebStats.Interfaces;
 
 namespace WebStats
 {
+    /// <summary>
+    /// Gathers information about request processing times and response sizes.
+    /// For web page requests, stats are added to the response body as an HTML widget.
+    /// </summary>
     public class StatsModule : IHttpModule
     {
         private static IDictionary<string, object> StateStore { get; } = new Dictionary<string, object>();

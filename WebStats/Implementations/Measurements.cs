@@ -20,9 +20,14 @@ namespace WebStats.Implementations
         {
             StateStore = stateStore;
         }
+
         private IDictionary<string, object> StateStore { get; }
          
-        
+
+        /// <summary>
+        /// Returns the average response body size of responses seen since application start.
+        /// </summary>
+        /// <returns></returns>
         public double GetAverageResponseSize()
         {
             var responseSizeList = GetResponseSizesList();
@@ -33,6 +38,10 @@ namespace WebStats.Implementations
             return responseSizeList.Average();
         }
 
+        /// <summary>
+        /// Returns the current response body size.
+        /// </summary>
+        /// <returns></returns>
         public double GetCurrentResponseSize()
         {
             var responseSizeList = GetResponseSizesList();
@@ -43,6 +52,11 @@ namespace WebStats.Implementations
             return responseSizeList.Last();
         }
 
+
+        /// <summary>
+        /// Returns the largest response body size of responses seen since application start.
+        /// </summary>
+        /// <returns></returns>
         public long GetMaxResponseSize()
         {
             var responseSizeList = GetResponseSizesList();
@@ -53,6 +67,11 @@ namespace WebStats.Implementations
             return responseSizeList.Max();
         }
 
+
+        /// <summary>
+        /// Returns the smallest, non-zero response body size of responses seen since application start.
+        /// </summary>
+        /// <returns></returns>
         public long GetMinResponseSize()
         {
             var responseSizeList = GetResponseSizesList();
@@ -64,6 +83,12 @@ namespace WebStats.Implementations
             return responseSizeList.Where(x => x > 0).Min();   
         }
 
+        /// <summary>
+        /// Gets the amount of time, in milliseconds, since processing started for the WebStats module
+        /// for the given request.
+        /// </summary>
+        /// <param name="requestID"></param>
+        /// <returns></returns>
         public string GetModuleProcessingTime(string requestID)
         {
             if (!StateStore.ContainsKey($"ModuleStart{requestID}"))
@@ -75,6 +100,11 @@ namespace WebStats.Implementations
             return string.Format("{0:n4}", counter.Elapsed.TotalMilliseconds);
         }
 
+        /// <summary>
+        /// Gets the amount of time, in milliseconds, since processing started for the given request.
+        /// </summary>
+        /// <param name="requestID"></param>
+        /// <returns></returns>
         public string GetRequestProcessingTime(string requestID)
         {
             if (!StateStore.ContainsKey($"RequestStart{requestID}"))
@@ -87,23 +117,46 @@ namespace WebStats.Implementations
         }
 
 
-
-        public void LogModuleStart(string requestID, Stopwatch counter)
+        /// <summary>
+        /// Begin counting elapsed time since processing started for the WebStats
+        /// module for the given request.
+        /// </summary>
+        /// <param name="requestID"></param>
+        /// <returns></returns>
+        public Stopwatch LogModuleStart(string requestID)
         {
+            var counter = Stopwatch.StartNew();
             StateStore[$"ModuleStart{requestID}"] = counter;
+            return counter;
         }
 
-        public void LogRequestStart(string requestID, Stopwatch counter)
+        /// <summary>
+        /// Begin counting elapsed time since processing started for the given request.
+        /// </summary>
+        /// <param name="requestID"></param>
+        /// <returns></returns>
+        public Stopwatch LogRequestStart(string requestID)
         {
+            var counter = Stopwatch.StartNew();
             StateStore[$"RequestStart{requestID}"] = counter;
+            return counter;
         }
 
+
+        /// <summary>
+        /// Adds the given response body size to the list in the StateStore.
+        /// </summary>
+        /// <param name="responseSize"></param>
         public void LogResponseSize(long responseSize)
         {
             var responseSizeList = GetResponseSizesList();
             responseSizeList.Add(responseSize);
         }
 
+        /// <summary>
+        /// Trims the length of the response sizes list in the StateStore
+        /// to keep it from growing indefinitely.
+        /// </summary>
         public void TrimResponseSizeList()
         {
             var responseSizeList = GetResponseSizesList();
@@ -113,6 +166,10 @@ namespace WebStats.Implementations
             }
         }
 
+        /// <summary>
+        /// Returns the list of response sizes from the StateStore.
+        /// </summary>
+        /// <returns></returns>
         private List<long> GetResponseSizesList()
         {
             if (!StateStore.ContainsKey("ResponseSizes") ||

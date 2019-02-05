@@ -36,16 +36,16 @@ namespace WebStats.Implementations
             Context.Request.Headers.Add("WebStatsRequestID", requestID);
 
             // Log the beginning of the request processing for this request.
-            Measurements.LogRequestStart(requestID, Stopwatch.StartNew());
+            Measurements.LogRequestStart(requestID);
             Context.Response.Filter = new MeasurementFilter(Context.Response.Filter);
         }
 
 
         public void ProcessRequestEnd()
         {
-            // Get request ID header and remove it.
+            // Get request ID from the headers.
             var requestID = Context.Request.Headers["WebStatsRequestID"];
-            Measurements.LogModuleStart(requestID, Stopwatch.StartNew());
+            Measurements.LogModuleStart(requestID);
 
             Measurements.LogResponseSize((Context.Response.Filter as MeasurementFilter).BytesWritten);
             
@@ -60,6 +60,10 @@ namespace WebStats.Implementations
             CleanupApplicationState(requestID);
         }
 
+        /// <summary>
+        /// Remove custom request header and clean up the StateStore.
+        /// </summary>
+        /// <param name="requestID"></param>
         private void CleanupApplicationState(string requestID)
         {
             // Remove custom header.
