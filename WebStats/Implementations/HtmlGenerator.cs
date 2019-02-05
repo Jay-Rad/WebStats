@@ -18,12 +18,12 @@ namespace WebStats.Implementations
         public HtmlGenerator(IMeasurements measurements)
         {
             Measurements = measurements;
+            LoadWidgetContent();
         }
 
         private IMeasurements Measurements { get; }
 
         private string WidgetContent { get; set; }
-
 
         /// <summary>
         /// Returns an HTML string to insert into the response body that will display
@@ -33,17 +33,6 @@ namespace WebStats.Implementations
         /// <returns></returns>
         public string GetStatsWidget(string requestID)
         {
-            if (string.IsNullOrWhiteSpace(WidgetContent))
-            {
-                using (var mrs = Assembly.GetExecutingAssembly().GetManifestResourceStream("WebStats.Resources.StatsWidget.html"))
-                {
-                    using (var sr = new StreamReader(mrs))
-                    {
-                        WidgetContent = sr.ReadToEnd();
-                    }
-                }
-            }
-
             var current = Measurements.GetCurrentResponseSize();
             var min = Measurements.GetMinResponseSize();
             var avg = Measurements.GetAverageResponseSize();
@@ -56,8 +45,22 @@ namespace WebStats.Implementations
                 .Replace("{minResponseSize}", string.Format("{0:n0}", min))
                 .Replace("{averageResponseSize}", string.Format("{0:n}", avg))
                 .Replace("{maxResponseSize}", string.Format("{0:n0}", max))
-                .Replace("{moduleTime}", moduleTime)
-                .Replace("{requestTime}", requestTime);
+                .Replace("{moduleTime}", string.Format("{0:n4}",moduleTime))
+                .Replace("{requestTime}", string.Format("{0:n4}", requestTime));
+        }
+
+        /// <summary>
+        /// Loads the HTML widget content from the embedded resource file.
+        /// </summary>
+        private void LoadWidgetContent()
+        {
+            using (var mrs = Assembly.GetExecutingAssembly().GetManifestResourceStream("WebStats.Resources.StatsWidget.html"))
+            {
+                using (var sr = new StreamReader(mrs))
+                {
+                    WidgetContent = sr.ReadToEnd();
+                }
+            }
         }
     }
 }

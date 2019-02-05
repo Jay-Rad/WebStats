@@ -89,15 +89,15 @@ namespace WebStats.Implementations
         /// </summary>
         /// <param name="requestID"></param>
         /// <returns></returns>
-        public string GetModuleProcessingTime(string requestID)
+        public double GetModuleProcessingTime(string requestID)
         {
             if (!StateStore.ContainsKey($"ModuleStart{requestID}"))
             {
-                return "Not Found";
+                return 0;
             }
             var counter = (Stopwatch)StateStore[$"ModuleStart{requestID}"];
             counter.Stop();
-            return string.Format("{0:n4}", counter.Elapsed.TotalMilliseconds);
+            return counter.Elapsed.TotalMilliseconds;
         }
 
         /// <summary>
@@ -105,15 +105,15 @@ namespace WebStats.Implementations
         /// </summary>
         /// <param name="requestID"></param>
         /// <returns></returns>
-        public string GetRequestProcessingTime(string requestID)
+        public double GetRequestProcessingTime(string requestID)
         {
             if (!StateStore.ContainsKey($"RequestStart{requestID}"))
             {
-                return "Not Found";
+                return 0;
             }
             var counter = (Stopwatch)StateStore[$"RequestStart{requestID}"];
             counter.Stop();
-            return string.Format("{0:n4}", counter.Elapsed.TotalMilliseconds);
+            return counter.Elapsed.TotalMilliseconds;
         }
 
 

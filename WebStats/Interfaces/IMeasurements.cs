@@ -11,8 +11,8 @@ namespace WebStats.Interfaces
         double GetCurrentResponseSize();
         long GetMaxResponseSize();
         long GetMinResponseSize();
-        string GetModuleProcessingTime(string requestID);
-        string GetRequestProcessingTime(string requestID);
+        double GetModuleProcessingTime(string requestID);
+        double GetRequestProcessingTime(string requestID);
         Stopwatch LogModuleStart(string requestID);
         Stopwatch LogRequestStart(string requestID);
         void LogResponseSize(long responseSize);

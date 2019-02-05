@@ -26,8 +26,8 @@ namespace WebStats.UnitTests
         public void MeasureTimeTests()
         {
             // Should return "Not Found" if start time hasn't been logged for request.
-            Assert.AreEqual(Measurements.GetModuleProcessingTime("test"), "Not Found");
-            Assert.AreEqual(Measurements.GetRequestProcessingTime("test"), "Not Found");
+            Assert.AreEqual(Measurements.GetModuleProcessingTime("test"), 0);
+            Assert.AreEqual(Measurements.GetRequestProcessingTime("test"), 0);
 
             var requestCounter = Measurements.LogRequestStart("test");
             var moduleCounter = Measurements.LogModuleStart("test");
@@ -39,11 +39,11 @@ namespace WebStats.UnitTests
             requestCounter.Stop();
 
             var requestTime = Measurements.GetRequestProcessingTime("test");
-            var expectedRequestTime = string.Format("{0:n4}", requestCounter.Elapsed.TotalMilliseconds);
+            var expectedRequestTime = requestCounter.Elapsed.TotalMilliseconds;
             Assert.AreEqual(expectedRequestTime, requestTime);
 
             var moduleTime = Measurements.GetModuleProcessingTime("test");
-            var expectedModuleTime = string.Format("{0:n4}", moduleCounter.Elapsed.TotalMilliseconds);
+            var expectedModuleTime = moduleCounter.Elapsed.TotalMilliseconds;
             Assert.AreEqual(expectedModuleTime, moduleTime);
         }
 
@@ -89,8 +89,8 @@ namespace WebStats.UnitTests
 
             var widgetHTML = generator.GetStatsWidget("test");
 
-            Assert.IsTrue(widgetHTML.Contains("<span id=\"requestTime\">Not Found</span>"));
-            Assert.IsTrue(widgetHTML.Contains("<span id=\"moduleTime\">Not Found</span>"));
+            Assert.IsTrue(widgetHTML.Contains("<span id=\"requestTime\">0.0000</span>"));
+            Assert.IsTrue(widgetHTML.Contains("<span id=\"moduleTime\">0.0000</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"currentResponseSize\">0</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"minResponseSize\">0</span>"));
             Assert.IsTrue(widgetHTML.Contains("<span id=\"averageresponseSize\">0.00</span>"));
